@@ -8,5 +8,6 @@ namespace Calculator.Abstraction
         List<string> History { get; }
         string Calculate(string expression);
         void AddToHistory(string entry);
+        void SetState(string currentExpression, List<string> history);
     }
 }

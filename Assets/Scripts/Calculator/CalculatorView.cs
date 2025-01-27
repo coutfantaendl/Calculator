@@ -1,3 +1,4 @@
+using System;
 using Calculator.Abstraction;
 using TMPro;
 using UnityEngine;
@@ -11,16 +12,13 @@ namespace Calculator
         [SerializeField] private TextMeshProUGUI resultText;
         [SerializeField] private TextMeshProUGUI historyText;
         [SerializeField] private Button calculateButton;
-
-        private CalculatorPresenter _presenter;
-
+        
+        public event Action<string> OnCalculatePressed;
+        public event Action OnViewLoaded;
         private void Start()
         {
-            var model = new CalculatorModel();
-            _presenter = new CalculatorPresenter(this, model);
-
-            _presenter.OnLoad();
-            calculateButton.onClick.AddListener(() => _presenter.OnCalculate(inputField.text));
+            calculateButton.onClick.AddListener(() => OnCalculatePressed?.Invoke(inputField.text));
+            OnViewLoaded?.Invoke();
         }
 
         public void ShowResult(string result)
